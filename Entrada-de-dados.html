@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Demonstração de Javascript</h2>
+        <p id="nome">Para conhecer você, clique no botão abaixo</p>
+        <p id="numero"></p>
+        <br>
+        <p id="tipo_nome"></p>
+        <p id="tipo_numero"></p>
+        <button type="button" onclick="myFunction()">Ao acionar este botão, vou conhecer você!</button>
+
+        <script>
+            //Declara uma função sem parâmetros de entrada
+            function myFunction() {
+                //Declara variaveis "nome" e "num"
+                //Em seguida atribui os valores digitados pelo usuário, no "prompt"
+                let nome = prompt("Qual o seu nome? ")
+                let numero = prompt("Qual o seu número favorito? ");
+
+                //Usa as respostas do usuário para apresentar a informação no HTML
+                document.getElementById("nome").innerHTML = "Olá " + nome + "! É muito bom conhecer você!";
+                document.getElementById("numero").innerHTML = numero + " também é meu número favorito!";
+
+                //Exibe os tipos de dados das variaveis "nome" e "numero" dos elementos HTML com id="tipo_nome" e id="tipo_numero"
+                document.getElementById("tipo_nome").innerHTML = "A variavel \"nome\" é uma " + typeof nome;
+                document.getElementById("tipo_numero").innerHTML = "A varivavel \"numero\" é uma " + typeof numero;
+            }
+        </script>
+    </body>
+</html>
