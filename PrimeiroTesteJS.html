@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Meu primeiro Javascript</h2>
+
+        <button type="button" onclick = "document.getElementById('textoDataHora').innerHTML = Date()">
+            Clique em mim para apresentar a data e hora atuais
+        </button>
+
+        <p id="textoDataHora"></p>
+    </body>
+</html>
+
+<!-- O elemento <button> possui um evento onclick, que ocorre quando o usuario clica o botão -->
+<!--Quando o usuário clicar no botão, o javascript é acionado, e altera o elemento HTML com o id="textoDataHora", que neste caso é um paragrafo-->
+<!--A propriedade innerHTML define, ou retorna, o conteúdo HTML de um elemento--> 
+<!--O método javascript Date() retorna a data e hora atuais-->
+<!--Como o elemento <p> está após o elemento <button>, o texto com a data e hora atuais aparece após o botão-->
