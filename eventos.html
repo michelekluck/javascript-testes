@@ -1,0 +1,37 @@
+<head>
+    <title>Exemplo de eventos com javascript</title>
+</head>
+<body>
+    <h2>Exemplo de multiplos eventos com javascript</h2>
+
+    <buton id="botaoClique">Clique em mim</buton>
+    <button id="botaoHover">Passe o mouse sobre mim</button>
+    <p id="mensagemClique"></p>
+    <p id="mensagemHover"></p>
+
+    <script>
+        //Adiciona evento de carregamento da pagina ao documento
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            //Atribuindo evento de clique ao primeiro botão
+            const botaoClique = document.getElementById('botaoClique');
+            botaoClique.addEventListener('click', function() {
+                const mensagemClique = document.getElementById('mensagemClique');
+                mensagemClique.innerHTML = 'O botão de clique foi clicado';
+            });
+
+            //Atribuindo evento de mouseover ao segundo botão
+            const botaoHover = document.getElementById('botaoHover');
+            botaoHover.addEventListener('mouseover', function() {
+                const mensagemHover = document.getElementById('mensagemHover');
+                mensagemHover.innerHTML = 'Você passou o mouse sobre o botão!';
+            })
+
+            //Atribuindo evento de mouseout ao segundo botão
+            botaoHover.addEventListener('mouseout', function(){
+                const mensagemHover = document.getElementById('mensagemHover');
+                mensagemHover.innerHTML = 'Você tiro o mouse do botão!';
+            })
+        });
+    </script>
+</body>
