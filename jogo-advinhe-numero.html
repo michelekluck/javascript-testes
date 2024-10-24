@@ -1,0 +1,141 @@
+<head>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+
+        body {
+            width: 50%;
+            max-width: 800px;
+            min-width: 480px;
+            margin: 0 auto;
+        }
+
+        .form input[type="number"] {
+            width: 200px;
+        }
+
+        .ultimoResultado {
+            color: white;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo: adivinhe o número</h1>
+    <p>Selecionamos um número aleatório de 1 a 100. Veja se você consegue acertar em 10 chances, ou perca. Nós iremos te informar se seu chute está muito baixo ou muito alto.</p>
+
+    <div class=" resultadosParas">
+    <p class="palpites"></p>
+    <p class="ultimoResultado"></p>
+    <p class="baixoOuAlto"></p>
+    </div>
+
+    <div class="formulario">
+    <label for="campoPalpite">Digite um palpite: </label>
+    <input type="number" id="campoPalpite" class="campoPalpite" min="1" max="100">
+    <input type="submit" value="Enviar palpite" class="envioPalpite">
+    </div>
+
+    <script> 
+        var numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+
+        var palpites = document.querySelector(".palpites");
+        var ultimoResultado = document.querySelector(".ultimoResultado");
+        var baixoOuAlto = document.querySelector(".baixoOuAlto");
+
+        var envioPalpite = document.querySelector(".envioPalpite");
+        var campoPalpite = document.querySelector(".campoPalpite");
+
+        var contagemPalpites = 1;
+        var botaoReinicio;
+        campoPalpite.focus();
+
+        function conferirPalpite() {
+           var palpiteUsuario = Number(campoPalpite.value); // define o valor da varuavel igual ao valor inserido pelo jogador no campo texto
+           // 'Number' é apenas para ter certeza de que o valor inserido é um número
+           if (contagemPalpites === 1) { // verifica se essa é ou não a primeira tentativa do jogador
+            // na primeira tenativa, o conteudo do <p> 'palpites' é definido como "palpites anteriores"
+            palpites.textContent = "Palpites anteriores: ";
+           }
+           // essa linha sempre será executada, independentemente do valor de contagemPalpites
+           // ela adiciona palpiteUsuario ao conteudo 'palpites'
+           palpites.textContent += palpiteUsuario + " ";
+
+           // confere se o palpite do jogador é igual ao numero aleatorio
+           if (palpiteUsuario === numeroAleatorio) {
+            // se for igual, o jogador venceu o jogo
+            ultimoResultado.textContent = "Parabéns! Você acertou!";
+            ultimoResultado.style.backgroundColor = "green";
+            // limpamos o conteudo do paragrafo que informe se o palpite foi alto ou baixo
+            baixoOuAlto.textContent = "";
+            configFimDeJogo(); // executamos essa função
+            // esse elfe if confere se o palpite do jogador é a ultima tentativa
+           } else if (contagemPalpites === 10) {
+            // se for, o programa faz o mesmo que o bloco anterior, porém com uma mensagem de fim de jogo
+            ultimoResultado.textContent = "!!! FIM DE JOGO !!!";
+            baixoOuAlto.textContent = "";
+            configFimDeJogo();
+            // esse else so será executado se nenhum dos dois blocos acima for verdadeiro
+           } else {
+            // dizemos a ele se seu chute está errado
+            ultimoResultado.textContent = "Errado!";
+            ultimoResultado.style.backgroundColor = "red";
+            // rodamos outro teste para ver se o palpite foi maior ou menor do que a resposta certa
+            if (palpiteUsuario < numeroAleatorio) {
+                baixoOuAlto.textContent = "Seu palpite está muito baixo!";
+            } else if (palpiteUsuario > numeroAleatorio) {
+                baixoOuAlto.textContent = "Seu palpite está muito alto!";
+            }
+           }
+
+           contagemPalpites++; // sommamos 1 à variavel contagem palpites para que o jogador use sua tentativa
+            // o campo de texto será esvaziado e focado novamente, pronto para que o proximo palpite seja inserido
+           campoPalpite.value = "";
+           campoPalpite.focus();
+        }
+
+        envioPalpite.addEventListener("click", conferirPalpite);
+
+        function configFimDeJogo() {
+            // desabilita a entrada de texto do formulario e o clique do botão
+            campoPalpite.disabled = true;
+            envioPalpite.disabled = true;
+            
+            // geramos um novo elemento button, define o texto de seu rotulo como 'iniciar novo jogo' e o adiciona ao final do HTML existente
+            botaoReinicio = document.createElement("button");
+            botaoReinicio.textContent = "Iniciar novo jogo";
+            document.body.appendChild(botaoReinicio);
+            // define um event listener ao botão, para que quando seja clicado, uma função chamada reiniciarJogo() seja executada
+            botaoReinicio.addEventListener("click", reiniciarJogo);
+        }
+
+        // redefine completamente tudo do modo como era o inicio do jogo
+        function reiniciarJogo() {
+            // coloca a contagemPalpites novamente igual a 1
+            contagemPalpites = 1;
+
+            // limpa todos os paragrafos informativos
+            var reiniciarParas = document.querySelectorAll(".resultadosParas p");
+            for (var i = 0; i < reiniciarParas.length; i ++) {
+                reiniciarParas[i].textContent = "";
+            }
+
+            // remove o botão resete do codigo
+            botaoReinicio.parentNode.removeChild(botaoReinicio);
+
+            // habilita os elementos formularios,=
+            campoPalpite.disabled = false;
+            envioPalpite.disabled = false;
+            campoPalpite.value = ""; // esvazia o campo de texto
+            campoPalpite.focus(); // foco ao campo de texto
+            //deixa pronto para que um novo palpite seja inserido
+
+            // remove a cor do fundo do paragrafo ultimoResultado
+            ultimoResultado.style.backgroundColor = "white";
+
+            // gera um novo numero aleatorio para que o jogador nao esteja tentando adivinhar o mesmo numero novamente
+            numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+        }
+    </script>
+</body>
